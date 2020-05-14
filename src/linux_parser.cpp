@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
-
+#include<format.h>
 #include "linux_parser.h"
 
 using std::stof;
@@ -194,7 +194,7 @@ int LinuxParser::TotalProcesses() {
       std::istringstream linestream(line);
       linestream>>key>>value;
       if(key=="processes")
-      return std::stoi(value)
+      return std::stoi(value);
     }
   }
   return 0;
@@ -269,14 +269,14 @@ string LinuxParser::Uid(int pid) {
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::User(int pid) {
-  string line='';
+  string line;
   string search="x:"+to_string(pid);
   std::ifstream filestream(kPasswordPath);
   if(filestream){
     while(std::getline(filestream,line)){
       auto position=line.find(search);
-      if(pos!=string::npos)
-      return line.substr(0,pos-1);
+      if(position!=string::npos)
+      return line.substr(0,position-1);
     }
   }
   return "root";
